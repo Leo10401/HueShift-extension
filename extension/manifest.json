@@ -1,0 +1,37 @@
+{
+  "manifest_version": 3,
+  "name": "HueShift",
+  "version": "1.1.0",
+  "description": "Change the theme of any website with advanced customization options",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["themes.css"]
+    }
+  ],
+  "commands": {
+    "toggle-dark-mode": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Toggle dark mode"
+    },
+    "toggle-light-mode": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Toggle light mode"
+    },
+    "toggle-default-mode": {
+      "suggested_key": {
+        "default": "Alt+Shift+N"
+      },
+      "description": "Toggle default mode"
+    }
+  }
+}

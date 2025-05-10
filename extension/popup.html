@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Theme Changer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary-color: #4285f4;
+      --primary-hover: #3367d6;
+      --background: #ffffff;
+      --text-color: #333333;
+      --border-radius: 8px;
+      --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    body {
+      width: 360px;
+      margin: 0;
+      padding: 15px;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background);
+      color: var(--text-color);
+      border-radius: var(--border-radius);
+      box-shadow: var(--shadow);
+      transition: var(--transition);
+    }
+    
+    h1 {
+      font-size: 20px;
+      margin: 0 0 15px 0;
+      padding-bottom: 10px;
+      text-align: center;
+      color: var(--primary-color);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    
+    h1 svg {
+      width: 24px;
+      height: 24px;
+    }
+    
+    .site-info {
+      font-size: 13px;
+      color: #666;
+      text-align: center;
+      margin-bottom: 15px;
+      background: #f5f5f5;
+      padding: 6px 10px;
+      border-radius: 4px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .site-info svg {
+      width: 14px;
+      height: 14px;
+      margin-right: 6px;
+    }
+    
+    .search-container {
+      margin-bottom: 15px;
+      position: relative;
+    }
+    
+    .search-container svg {
+      position: absolute;
+      left: 10px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 16px;
+      height: 16px;
+      color: #666;
+    }
+    
+    .search-container input {
+      width: 100%;
+      padding: 8px 8px 8px 32px;
+      border-radius: var(--border-radius);
+      border: 1px solid #ddd;
+      font-size: 14px;
+      box-sizing: border-box;
+    }
+    
+    .themes-container {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+      max-height: 300px;
+      overflow-y: auto;
+      padding-right: 5px;
+    }
+    
+    .theme-option-wrapper {
+      transition: var(--transition);
+    }
+    
+    .theme-option {
+      position: relative;
+      padding: 12px;
+      border-radius: var(--border-radius);
+      background: #f8f9fa;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    
+    .theme-option:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.12);
+    }
+    
+    .color-preview {
+      width: 100%;
+      height: 80px;
+      margin-bottom: 8px;
+      border-radius: 4px;
+      border: 1px solid rgba(0, 0, 0, 0.1);
+      transition: var(--transition);
+    }
+    
+    .theme-label {
+      font-weight: 500;
+      font-size: 14px;
+      text-align: center;
+    }
+    
+    input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+    }
+    
+    input[type="radio"]:checked + .theme-option {
+      border: 2px solid var(--primary-color);
+      box-shadow: 0 0 0 2px rgba(66, 133, 244, 0.3);
+    }
+    
+    .settings-section {
+      margin-bottom: 20px;
+      background: #f8f9fa;
+      padding: 12px;
+      border-radius: var(--border-radius);
+    }
+    
+    .settings-section h3 {
+      margin: 0 0 10px 0;
+      font-size: 16px;
+      color: #555;
+    }
+    
+    .slider-container {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .slider-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .slider-header label {
+      font-size: 14px;
+      font-weight: 500;
+    }
+    
+    .slider-value {
+      font-size: 14px;
+      color: #666;
+      font-weight: 500;
+    }
+    
+    input[type="range"] {
+      width: 100%;
+      height: 6px;
+      -webkit-appearance: none;
+      background: #ddd;
+      border-radius: 3px;
+      outline: none;
+    }
+    
+    input[type="range"]::-webkit-slider-thumb {
+      -webkit-appearance: none;
+      width: 16px;
+      height: 16px;
+      border-radius: 50%;
+      background: var(--primary-color);
+      cursor: pointer;
+    }
+    
+    .font-size-controls {
+      display: flex;
+      gap: 8px;
+      margin-top: 8px;
+    }
+    
+    .font-size-controls button {
+      flex: 1;
+      padding: 6px 0;
+      font-size: 13px;
+      background: #f0f0f0;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: var(--transition);
+    }
+    
+    .font-size-controls button:hover {
+      background: #e0e0e0;
+    }
+    
+    .font-size-controls button.active {
+      background: var(--primary-color);
+      color: white;
+      border-color: var(--primary-color);
+    }
+    
+    .checkbox-container {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    
+    .checkbox-container input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+    }
+    
+    .checkbox-container label {
+      font-size: 14px;
+    }
+    
+    button {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      background-color: var(--primary-color);
+      color: white;
+      border: none;
+      border-radius: var(--border-radius);
+      cursor: pointer;
+      transition: var(--transition);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    button:hover {
+      background-color: var(--primary-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+    
+    button:active {
+      transform: translateY(0);
+    }
+    
+    button svg {
+      width: 18px;
+      height: 18px;
+    }
+    
+    .status {
+      margin-top: 12px;
+      font-size: 13px;
+      text-align: center;
+      color: #888;
+      height: 20px;
+      transition: opacity 0.3s ease;
+    }
+    
+    .footer {
+      display: flex;
+      justify-content: center;
+      margin-top: 15px;
+      font-size: 12px;
+      color: #888;
+    }
+    
+    .footer a {
+      color: var(--primary-color);
+      text-decoration: none;
+      margin: 0 5px;
+      transition: var(--transition);
+    }
+    
+    .footer a:hover {
+      text-decoration: underline;
+    }
+    
+    /* Theme preview colors */
+    #dark-preview {
+      background-color: #222;
+      background-image: linear-gradient(to bottom right, #222, #444);
+    }
+    
+    #light-preview {
+      background-color: #f5f5f5;
+      background-image: linear-gradient(to bottom right, #f5f5f5, #e0e0e0);
+    }
+    
+    #sepia-preview {
+      background-color: #f4ecd8;
+      background-image: linear-gradient(to bottom right, #f4ecd8, #e6d9bd);
+    }
+    
+    #blue-preview {
+      background-color: #d0e8f2;
+      background-image: linear-gradient(to bottom right, #d0e8f2, #bbdcef);
+    }
+    
+    #green-preview {
+      background-color: #e8f5e9;
+      background-image: linear-gradient(to bottom right, #e8f5e9, #c8e6c9);
+    }
+    
+    #nord-preview {
+      background-color: #2e3440;
+      background-image: linear-gradient(to bottom right, #2e3440, #3b4252);
+    }
+    
+    #mint-preview {
+      background-color: #e0f2f1;
+      background-image: linear-gradient(to bottom right, #e0f2f1, #b2dfdb);
+    }
+    
+    #solarized-preview {
+      background-color: #fdf6e3;
+      background-image: linear-gradient(to bottom right, #fdf6e3, #eee8d5);
+    }
+    
+    #purple-preview {
+      background-color: #f3e5f5;
+      background-image: linear-gradient(to bottom right, #f3e5f5, #e1bee7);
+    }
+    
+    #none-preview {
+      background-image: linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0), 
+                        linear-gradient(45deg, #f0f0f0 25%, transparent 25%, transparent 75%, #f0f0f0 75%, #f0f0f0);
+      background-size: 16px 16px;
+      background-position: 0 0, 8px 8px;
+    }
+    
+    /* Dialog for keyboard shortcuts */
+    .dialog {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      align-items: center;
+      justify-content: center;
+    }
+    
+    .dialog-content {
+      background: white;
+      padding: 20px;
+      border-radius: 8px;
+      width: 80%;
+      max-width: 320px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    }
+    
+    .dialog h3 {
+      margin-top: 0;
+      color: var(--primary-color);
+    }
+    
+    .shortcut-list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    
+    .shortcut-list li {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .shortcut-list li:last-child {
+      border-bottom: none;
+    }
+    
+    .shortcut-key {
+      background: #f0f0f0;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 12px;
+    }
+    
+    .close-dialog {
+      margin-top: 15px;
+      text-align: right;
+    }
+    
+    .close-dialog button {
+      padding: 6px 12px;
+      font-size: 14px;
+      background: #f0f0f0;
+      color: #333;
+      border: 1px solid #ddd;
+    }
+    
+    .close-dialog button:hover {
+      background: #e0e0e0;
+    }
+  </style>
+</head>
+<body>
+  <h1>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="5"/>
+      <line x1="12" y1="1" x2="12" y2="3"/>
+      <line x1="12" y1="21" x2="12" y2="23"/>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
+      <line x1="1" y1="12" x2="3" y2="12"/>
+      <line x1="21" y1="12" x2="23" y2="12"/>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
+    </svg>
+    Theme Changer
+  </h1>
+  
+  <div class="site-info">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="12" cy="12" r="10"/>
+      <line x1="12" y1="16" x2="12" y2="12"/>
+      <line x1="12" y1="8" x2="12.01" y2="8"/>
+    </svg>
+    Current site: <span id="current-site">example.com</span>
+  </div>
+  
+  <div class="search-container">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <circle cx="11" cy="11" r="8"/>
+      <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+    </svg>
+    <input type="text" id="search-themes" placeholder="Search themes...">
+  </div>
+  
+  <div class="themes-container">
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="dark">
+        <div class="theme-option">
+          <div class="color-preview" id="dark-preview"></div>
+          <span class="theme-label">Dark</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="light">
+        <div class="theme-option">
+          <div class="color-preview" id="light-preview"></div>
+          <span class="theme-label">Light</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="sepia">
+        <div class="theme-option">
+          <div class="color-preview" id="sepia-preview"></div>
+          <span class="theme-label">Sepia</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="blue">
+        <div class="theme-option">
+          <div class="color-preview" id="blue-preview"></div>
+          <span class="theme-label">Blue Light</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="green">
+        <div class="theme-option">
+          <div class="color-preview" id="green-preview"></div>
+          <span class="theme-label">Green</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="nord">
+        <div class="theme-option">
+          <div class="color-preview" id="nord-preview"></div>
+          <span class="theme-label">Nord</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="mint">
+        <div class="theme-option">
+          <div class="color-preview" id="mint-preview"></div>
+          <span class="theme-label">Mint</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="solarized">
+        <div class="theme-option">
+          <div class="color-preview" id="solarized-preview"></div>
+          <span class="theme-label">Solarized</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="purple">
+        <div class="theme-option">
+          <div class="color-preview" id="purple-preview"></div>
+          <span class="theme-label">Purple</span>
+        </div>
+      </label>
+    </div>
+    
+    <div class="theme-option-wrapper">
+      <label>
+        <input type="radio" name="theme" value="none">
+        <div class="theme-option">
+          <div class="color-preview" id="none-preview"></div>
+          <span class="theme-label">Default</span>
+        </div>
+      </label>
+    </div>
+  </div>
+  
+  <div class="settings-section">
+    <h3>Theme Settings</h3>
+    
+    <div class="slider-container">
+      <div class="slider-header">
+        <label for="intensity-slider">Intensity</label>
+        <span class="slider-value" id="intensity-value">100%</span>
+      </div>
+      <input type="range" id="intensity-slider" min="10" max="100" value="100" step="5">
+    </div>
+    
+    <div class="slider-container">
+      <div class="slider-header">
+        <label>Font Size</label>
+      </div>
+      <div class="font-size-controls" id="font-size-controls">
+        <button data-size="small">Small</button>
+        <button data-size="normal" class="active">Normal</button>
+        <button data-size="large">Large</button>
+        <button data-size="x-large">X-Large</button>
+      </div>
+    </div>
+    
+    <div class="checkbox-container">
+      <input type="checkbox" id="save-per-site">
+      <label for="save-per-site">Save settings for this site only</label>
+    </div>
+  </div>
+  
+  <button id="apply-button">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+    </svg>
+    Apply Theme
+  </button>
+  
+  <div class="status" id="status"></div>
+  
+  <div class="footer">
+    <a href="#" id="show-shortcuts">Keyboard Shortcuts</a> | 
+    <a href="#" target="_blank">Help</a>
+  </div>
+  
+  <!-- Keyboard shortcuts dialog -->
+  <div class="dialog" id="shortcuts-dialog">
+    <div class="dialog-content">
+      <h3>Keyboard Shortcuts</h3>
+      <ul class="shortcut-list">
+        <li>
+          <span>Apply theme</span>
+          <span class="shortcut-key">Alt+A</span>
+        </li>
+        <li>
+          <span>Select theme 1-9</span>
+          <span class="shortcut-key">Alt+1...9</span>
+        </li>
+        <li>
+          <span>Dark mode</span>
+          <span class="shortcut-key">Alt+Shift+D</span>
+        </li>
+        <li>
+          <span>Light mode</span>
+          <span class="shortcut-key">Alt+Shift+L</span>
+        </li>
+        <li>
+          <span>Default mode</span>
+          <span class="shortcut-key">Alt+Shift+N</span>
+        </li>
+        <li>
+          <span>Increase font size</span>
+          <span class="shortcut-key">Alt+Shift++</span>
+        </li>
+        <li>
+          <span>Decrease font size</span>
+          <span class="shortcut-key">Alt+Shift+-</span>
+        </li>
+      </ul>
+      <div class="close-dialog">
+        <button id="close-shortcuts">Close</button>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>

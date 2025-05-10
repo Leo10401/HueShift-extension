@@ -1,0 +1,157 @@
+/* Theme Changer Pro - Base Themes 
+   These styles are used as a fallback if the dynamic application fails */
+
+/* Dark Theme */
+.theme-dark {
+  filter: invert(90%) hue-rotate(180deg) !important;
+  background-color: #121212 !important;
+  color: #e8e8e8 !important;
+}
+
+.theme-dark img:not([src*=".svg"]),
+.theme-dark video,
+.theme-dark canvas,
+.theme-dark iframe {
+  filter: invert(100%) hue-rotate(180deg) !important;
+}
+
+/* Light Theme */
+.theme-light {
+  background-color: #f8f9fa !important;
+  color: #202124 !important;
+}
+
+.theme-light a {
+  color: #1a73e8 !important;
+}
+
+/* Sepia Theme */
+.theme-sepia {
+  background-color: #f4ecd8 !important;
+  color: #5b4636 !important;
+}
+
+.theme-sepia img {
+  filter: sepia(30%) !important;
+}
+
+.theme-sepia a {
+  color: #9b7653 !important;
+}
+
+/* Blue Light Filter */
+.theme-blue {
+  filter: sepia(20%) hue-rotate(190deg) brightness(105%) !important;
+  background-color: #e6f4ff !important;
+}
+
+.theme-blue img,
+.theme-blue video {
+  filter: sepia(10%) hue-rotate(170deg) !important;
+}
+
+/* Green Theme */
+.theme-green {
+  background-color: #e8f5e9 !important;
+  color: #1b5e20 !important;
+  filter: hue-rotate(80deg) saturate(0.8) !important;
+}
+
+.theme-green a {
+  color: #2e7d32 !important;
+}
+
+/* Nord Theme */
+.theme-nord {
+  background-color: #2e3440 !important;
+  color: #eceff4 !important;
+}
+
+.theme-nord a {
+  color: #88c0d0 !important;
+}
+
+.theme-nord h1,
+.theme-nord h2,
+.theme-nord h3 {
+  color: #81a1c1 !important;
+}
+
+/* Mint Theme */
+.theme-mint {
+  background-color: #e0f2f1 !important;
+  color: #004d40 !important;
+}
+
+.theme-mint a {
+  color: #00897b !important;
+}
+
+/* Solarized Theme */
+.theme-solarized {
+  background-color: #fdf6e3 !important;
+  color: #657b83 !important;
+}
+
+.theme-solarized a {
+  color: #268bd2 !important;
+}
+
+/* Purple Theme */
+.theme-purple {
+  background-color: #f3e5f5 !important;
+  color: #4a148c !important;
+}
+
+.theme-purple a {
+  color: #8e24aa !important;
+}
+
+/* Font size classes */
+.font-size-small {
+  font-size: 14px !important;
+}
+
+.font-size-normal {
+  font-size: 16px !important;
+}
+
+.font-size-large {
+  font-size: 18px !important;
+}
+
+.font-size-x-large {
+  font-size: 20px !important;
+}
+
+/* Reading mode improvements */
+.theme-dark article,
+.theme-dark .article,
+.theme-dark .content,
+.theme-dark main,
+.theme-light article,
+.theme-light .article,
+.theme-light .content,
+.theme-light main,
+.theme-sepia article,
+.theme-sepia .article,
+.theme-sepia .content,
+.theme-sepia main {
+  max-width: 800px;
+  margin: 0 auto;
+  line-height: 1.6;
+  letter-spacing: 0.01em;
+}
+
+/* Transition styles for smoother theme changes */
+body,
+body * {
+  transition: background-color 0.3s ease, color 0.3s ease, filter 0.3s ease !important;
+}
+
+/* Exclude elements from theming */
+[data-theme-exclude="true"] {
+  filter: none !important;
+  background-color: initial !important;
+  color: initial !important;
+}
